@@ -3,161 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofwan Music</title>
+    <title>Musk by Sofwan</title>
     <style>
+        /* Reset Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* Body and Background */
         body {
-            background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 70%);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .star {
-            position: absolute;
-            border-radius: 50%;
-            background-color: white;
-            opacity: 0.7;
-            animation: twinkle 2s infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-
-        .container {
-            max-width: 100%;
-            height: 100vh;
-            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2;
-        }
-
-        .neon-splash {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s;
-            z-index: 1;
-        }
-
-        .neon-splash.active {
-            opacity: 1;
-        }
-
-        .neon-splash span {
-            position: absolute;
-            background: radial-gradient(circle, rgba(255,0,255,0.8) 0%, rgba(255,0,255,0) 70%);
-            border-radius: 50%;
-            animation: float 3s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.1); }
-        }
-
-        .player {
+            background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 80%);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
             position: relative;
+        }
+
+        /* Animated Neon Lights */
+        .neon-bg {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.2) 0%, rgba(0, 0, 0, 0.7) 80%);
+            animation: neonAnimation 5s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes neonAnimation {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
             width: 90%;
             max-width: 400px;
             background: rgba(40, 40, 40, 0.9);
+            padding: 30px;
             border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
-            transition: all 0.3s;
-            z-index: 2;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
         }
 
-        .player:hover {
-            box-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
-            transform: scale(1.02);
-        }
-
-        .song-info {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .song-cover {
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 20px;
+        /* Song Cover */
+        .song-cover img {
+            width: 100%;
             border-radius: 15px;
-            overflow: hidden;
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
         }
 
-        .song-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .song-cover:hover img {
-            transform: scale(1.05);
-        }
-
+        /* Song Info */
         .song-title {
             font-size: 1.8em;
-            margin-bottom: 8px;
+            margin-top: 15px;
             color: #1DB954;
-            text-shadow: 0 0 10px rgba(29, 185, 84, 0.3);
+            text-align: center;
         }
 
         .artist {
             color: #b3b3b3;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            text-align: center;
         }
 
+        /* Controls */
         .controls {
+            margin-top: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 25px;
-            margin-top: 25px;
+            gap: 15px;
         }
 
         .play-btn {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: #1DB954;
             border: none;
             color: white;
-            cursor: pointer;
+            font-size: 24px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 28px;
+            align-items: center;
+            cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(29, 185, 84, 0.4);
         }
 
         .play-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(29, 185, 84, 0.6);
+            box-shadow: 0 0 20px rgba(29, 185, 84, 0.5);
         }
 
+        /* Progress Bar */
         .progress {
             width: 100%;
             height: 6px;
             background: #404040;
             border-radius: 3px;
-            margin-top: 25px;
+            margin-top: 15px;
             position: relative;
             cursor: pointer;
         }
@@ -168,27 +119,9 @@
             background: #1DB954;
             border-radius: 3px;
             transition: width 0.1s linear;
-            position: relative;
         }
 
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            right: -5px;
-            top: -4px;
-            width: 14px;
-            height: 14px;
-            background: #1DB954;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(29, 185, 84, 0.6);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .progress:hover .progress-bar::after {
-            opacity: 1;
-        }
-
+        /* Time */
         .time {
             display: flex;
             justify-content: space-between;
@@ -197,61 +130,48 @@
             font-size: 0.9em;
         }
 
+        /* Spotify Embed */
         #spotifyPlayer {
-            display: none;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Generate Stars in the Background -->
-    <script>
-        for (let i = 0; i < 200; i++) {
-            let star = document.createElement('div');
-            star.classList.add('star');
-            let size = Math.random() * 3 + 1; // random star size
-            let x = Math.random() * window.innerWidth; // random x position
-            let y = Math.random() * window.innerHeight; // random y position
-            let duration = Math.random() * 2 + 1; // random twinkle duration
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.left = `${x}px`;
-            star.style.top = `${y}px`;
-            star.style.animationDuration = `${duration}s`;
-            document.body.appendChild(star);
-        }
-    </script>
+    <div class="neon-bg"></div>
 
     <div class="container">
-        <div class="neon-splash" id="neonSplash"></div>
-        <div class="player">
-            <div class="song-info">
-                <div class="song-cover">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Another_Love_Tom_Odell_single_cover.png" alt="Another Love Cover">
-                </div>
-                <h2 class="song-title">Another Love</h2>
-                <p class="artist">Tom Odell</p>
-            </div>
-            <div class="progress" id="progress">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <div class="time">
-                <span id="currentTime">0:00</span>
-                <span id="duration">3:47</span>
-            </div>
-            <div class="controls">
-                <button class="play-btn" id="playBtn">▶</button>
-            </div>
-            <div id="spotifyPlayer">
-                <iframe src="https://open.spotify.com/embed/track/3JvKfv6T31zO0ini8iNItO" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-            </div>
+        <div class="song-cover">
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Another_Love_Tom_Odell_single_cover.png" alt="Song Cover">
+        </div>
+        <h2 class="song-title">Another Love</h2>
+        <p class="artist">Tom Odell</p>
+
+        <div class="progress" id="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="time">
+            <span id="currentTime">0:00</span>
+            <span id="duration">3:47</span>
+        </div>
+
+        <div class="controls">
+            <button class="play-btn" id="playBtn">▶</button>
+        </div>
+
+        <div id="spotifyPlayer">
+            <iframe src="https://open.spotify.com/embed/track/3JvKfv6T31zO0ini8iNItO" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
         </div>
     </div>
 
     <script>
+        // Simulate Play Button
         let isPlaying = false;
         const playBtn = document.getElementById('playBtn');
-        const progressBar = document.getElementById('progressBar');
-        const currentTimeSpan = document.getElementById('currentTime');
-        const progress = document.getElementById('progress');
 
-        let player;
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playBtn.textContent = isPlaying ? '⏸' : '▶';
+        });
+    </script>
+</body>
+</html>

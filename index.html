@@ -12,7 +12,7 @@
         }
 
         body {
-            background-color: #121212;
+            background: linear-gradient(45deg, rgba(255, 0, 255, 0.8), rgba(0, 0, 255, 0.8));
             color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
@@ -182,7 +182,7 @@
             font-size: 0.9em;
         }
 
-        #youtubePlayer {
+        #spotifyPlayer {
             display: none;
         }
     </style>
@@ -193,7 +193,7 @@
         <div class="player">
             <div class="song-info">
                 <div class="song-cover">
-                    <img src="https://drive.google.com/uc?export=view&id=1ALM3so4GIUs-ZT0zzSyPD7sXzmYg4077" alt="Another Love Cover">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Another_Love_Tom_Odell_single_cover.png" alt="Another Love Cover">
                 </div>
                 <h2 class="song-title">Another Love</h2>
                 <p class="artist">Tom Odell</p>
@@ -208,18 +208,13 @@
             <div class="controls">
                 <button class="play-btn" id="playBtn">▶</button>
             </div>
-            <div id="youtubePlayer"></div>
+            <div id="spotifyPlayer">
+                <iframe src="https://open.spotify.com/embed/track/3JvKfv6T31zO0ini8iNItO" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
         </div>
     </div>
 
     <script>
-        // Load YouTube IFrame Player API
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        let player;
         let isPlaying = false;
         const playBtn = document.getElementById('playBtn');
         const progressBar = document.getElementById('progressBar');
@@ -227,85 +222,264 @@
         const container = document.querySelector('.container');
         const neonSplash = document.getElementById('neonSplash');
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubePlayer', {
-                height: '0',
-                width: '0',
-                videoId: 'MwpMEbgC7DA', // ID video YouTube Another Love
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'rel': 0
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            playBtn.addEventListener('click', function() {
-                if (!isPlaying) {
-                    event.target.playVideo();
-                    playBtn.textContent = '⏸';
-                } else {
-                    event.target.pauseVideo();
-                    playBtn.textContent = '▶';
-                }
-                isPlaying = !isPlaying;
-            });
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.ENDED) {
-                isPlaying = false;
+        // Button Play/Pause functionality
+        playBtn.addEventListener('click', function() {
+            const iframe = document.querySelector('iframe');
+            const player = iframe.contentWindow;
+            if (!isPlaying) {
+                player.postMessage('{"command":"play"}', '*');
+                playBtn.textContent = '⏸';
+            } else {
+                player.postMessage('{"command":"pause"}', '*');
                 playBtn.textContent = '▶';
-                progressBar.style.width = '0%';
-                currentTimeSpan.textContent = '0:00';
             }
-        }
-
-        // Update progress bar and time
-        setInterval(function() {
-            if (player && player.getCurrentTime && isPlaying) {
-                const currentTime = player.getCurrentTime();
-                const duration = player.getDuration();
-                const progress = (currentTime / duration) * 100;
-                
-                progressBar.style.width = progress + '%';
-                
-                const minutes = Math.floor(currentTime / 60);
-                const seconds = Math.floor(currentTime % 60);
-                currentTimeSpan.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            }
-        }, 1000);
+            isPlaying = !isPlaying;
+        });
 
         // Neon effects
         function createNeonEffects() {
             neonSplash.innerHTML = '';
-            for (let i = 0; i < 15; i++) {
-                const span = document.createElement('span');
-                const size = Math.random() * 150 + 50;
-                span.style.width = size + 'px';
-                span.style.height = size + 'px';
-                span.style.left = Math.random() * 100 + '%';
-                span.style.top = Math.random() * 100 + '%';
-                span.style.animationDelay = Math.random() * 2 + 's';
-                neonSplash.appendChild(span);
-            }
+            for (let i = 0; i < 30; i++) {
+                const span = document.createElement('span');<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofwan Music</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        container.addEventListener('mousemove', () => {
-            neonSplash.classList.add('active');
-            createNeonEffects();
-            setTimeout(() => {
-                neonSplash.classList.remove('active');
-            }, 1000);
+        body {
+            background: linear-gradient(45deg, rgba(255, 0, 255, 0.8), rgba(0, 0, 255, 0.8));
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .neon-splash {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1;
+        }
+
+        .neon-splash.active {
+            opacity: 1;
+        }
+
+        .neon-splash span {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,0,255,0.8) 0%, rgba(255,0,255,0) 70%);
+            border-radius: 50%;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+        }
+
+        .player {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .player:hover {
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
+            transform: scale(1.02);
+        }
+
+        .song-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .song-cover {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .song-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .song-cover:hover img {
+            transform: scale(1.05);
+        }
+
+        .song-title {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            color: #1DB954;
+            text-shadow: 0 0 10px rgba(29, 185, 84, 0.3);
+        }
+
+        .artist {
+            color: #b3b3b3;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #1DB954;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(29, 185, 84, 0.4);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(29, 185, 84, 0.6);
+        }
+
+        .progress {
+            width: 100%;
+            height: 6px;
+            background: #404040;
+            border-radius: 3px;
+            margin-top: 25px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #1DB954;
+            border-radius: 3px;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -4px;
+            width: 14px;
+            height: 14px;
+            background: #1DB954;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(29, 185, 84, 0.6);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .progress:hover .progress-bar::after {
+            opacity: 1;
+        }
+
+        .time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            color: #b3b3b3;
+            font-size: 0.9em;
+        }
+
+        #spotifyPlayer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="neon-splash" id="neonSplash"></div>
+        <div class="player">
+            <div class="song-info">
+                <div class="song-cover">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/Another_Love_Tom_Odell_single_cover.png" alt="Another Love Cover">
+                </div>
+                <h2 class="song-title">Another Love</h2>
+                <p class="artist">Tom Odell</p>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="time">
+                <span id="currentTime">0:00</span>
+                <span id="duration">3:47</span>
+            </div>
+            <div class="controls">
+                <button class="play-btn" id="playBtn">▶</button>
+            </div>
+            <div id="spotifyPlayer">
+                <iframe src="https://open.spotify.com/embed/track/3JvKfv6T31zO0ini8iNItO" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        const playBtn = document.getElementById('playBtn');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeSpan = document.getElementById('currentTime');
+        const container = document.querySelector('.container');
+        const neonSplash = document.getElementById('neonSplash');
+
+        // Button Play/Pause functionality
+        playBtn.addEventListener('click', function() {
+            const iframe = document.querySelector('iframe');
+            const player = iframe.contentWindow;
+            if (!isPlaying) {
+                player.postMessage('{"command":"play"}', '*');
+                playBtn.textContent = '⏸';
+            } else {
+                player.postMessage('{"command":"pause"}', '*');
+                playBtn.textContent = '▶';
+            }
+            isPlaying = !isPlaying;
         });
 
-        // Init effects
-        createNeonEffects();
-    </script>
-</body>
-</html>
+        // Neon effects
+        function createNeonEffects() {
+            neonSplash.innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                const span = document.createElement('span');a

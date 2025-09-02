@@ -10,7 +10,7 @@ if not game:IsLoaded() then
 end
 		-- Instances:
 local Converted = {
-	["_By Sofwan"] = Instance.new("ScreenGui");
+	["_Sofwan"] = Instance.new("ScreenGui");
 	["_FUNCTIONS"] = Instance.new("ModuleScript");
 	["_SBT"] = Instance.new("ModuleScript");
 	["_DraggableObject"] = Instance.new("ModuleScript");
@@ -173,12 +173,12 @@ local Converted = {
 }
 -- Properties:
 -- [Aesthetic Change]: Changed main background to solid dark gray for a premium feel.
-Converted["_AFEMMax"].DisplayOrder = 2
-Converted["_AFEMMax"].IgnoreGuiInset = true
-Converted["_AFEMMax"].ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
-Converted["_AFEMMax"].ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-Converted["_AFEMMax"].Name = "AFEMMax"
-Converted["_AFEMMax"].Parent = game:GetService("CoreGui")
+Converted["_Sofwan"].DisplayOrder = 2
+Converted["_Sofwan"].IgnoreGuiInset = true
+Converted["_Sofwan"].ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
+Converted["_Sofwan"].ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Converted["_Sofwan"].Name = "Sofwan"
+Converted["_Sofwan"].Parent = game:GetService("CoreGui")
 Converted["_Menu"].AnchorPoint = Vector2.new(0.5, 0.5)
 Converted["_Menu"].BackgroundColor3 = Color3.fromRGB(20, 22, 25) -- Changed from black transparent
 Converted["_Menu"].BackgroundTransparency = 0 -- Changed from 0.5
@@ -188,7 +188,7 @@ Converted["_Menu"].ClipsDescendants = true
 Converted["_Menu"].Position = UDim2.new(0.5, 0, 0.5, 0)
 Converted["_Menu"].Size = UDim2.new(1, 0, 1, 0)
 Converted["_Menu"].Name = "Menu"
-Converted["_Menu"].Parent = Converted["_AFEMMax"]
+Converted["_Menu"].Parent = Converted["_Sofwan"]
 Converted["_UICorner"].CornerRadius = UDim.new(0, 12) -- Added corner radius for main menu
 Converted["_UICorner"].Parent = Converted["_Menu"]
 Converted["_Branding"].AutomaticSize = Enum.AutomaticSize.X
